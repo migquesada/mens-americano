@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0f3b31">
+<title>Men's Americano · UZU Club</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f2f0e9;--ink:#13201c;--muted:#68716c;--line:#e4e0d6;--card:#fff;--court:#0f3b31;--court2:#1d5a48;--ball:#d6f03c;--ok:#1d7f47;--okbg:#e6f4ea;--warn:#9a6412;--warnbg:#fbf1dc;--bad:#b83a26;--r:18px}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.45 Inter,system-ui,-apple-system,sans-serif;-webkit-font-smoothing:antialiased}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+.top{background:var(--court);color:#fff;padding:20px 16px 64px;position:relative;overflow:hidden}
+.top::before{content:"";position:absolute;inset:14px -40px auto auto;width:220px;height:140px;border:2px solid rgba(255,255,255,.09);border-radius:4px}
+.top::after{content:"";position:absolute;right:70px;top:14px;width:2px;height:140px;background:rgba(255,255,255,.09)}
+.top .in{max-width:520px;margin:0 auto;position:relative;z-index:1}
+.kicker{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--ball);font-weight:700}
+h1{font-family:'Bricolage Grotesque',Inter,sans-serif;font-weight:800;font-size:34px;line-height:1.02;margin:6px 0 0;letter-spacing:-.01em}
+h2{font-family:'Bricolage Grotesque',Inter,sans-serif;font-weight:700;font-size:20px;margin:0}
+h3{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0;font-weight:700}
+.wrap{max-width:520px;margin:-44px auto 0;padding:0 14px 60px;position:relative;z-index:2}
+.card{background:var(--card);border-radius:var(--r);padding:18px;box-shadow:0 1px 2px rgba(19,32,28,.05),0 8px 24px rgba(19,32,28,.06);margin-bottom:14px}
+.row{display:flex;align-items:center;gap:10px}
+.between{justify-content:space-between}
+.muted{color:var(--muted)}
+.small{font-size:13px}
+.stack>*+*{margin-top:12px}
+.date{display:flex;gap:14px;align-items:center}
+.datebox{background:var(--court);color:#fff;border-radius:14px;width:64px;min-width:64px;text-align:center;padding:8px 0}
+.datebox .d{font-family:'Bricolage Grotesque',sans-serif;font-size:28px;font-weight:800;line-height:1}
+.datebox .m,.datebox .w{font-size:11px;letter-spacing:.1em;text-transform:uppercase;font-weight:700}
+.datebox .w{color:var(--ball)}
+.pill{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;padding:4px 10px;border-radius:999px;background:#eeece4;color:var(--ink)}
+.pill.open{background:var(--okbg);color:var(--ok)}
+.pill.closed{background:var(--warnbg);color:var(--warn)}
+.pill.done{background:#eceae3;color:var(--muted)}
+.pill .dot{width:7px;height:7px;border-radius:50%;background:currentColor}
+.btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:15px 16px;border-radius:14px;border:0;font-weight:700;font-size:16px;text-decoration:none;color:inherit;transition:transform .08s}
+.btn:active{transform:scale(.98)}
+.btn[disabled]{opacity:.5;pointer-events:none}
+.btn-ball{background:var(--ball);color:var(--court)}
+.btn-dark{background:var(--court);color:#fff}
+.btn-ghost{background:transparent;border:1.5px solid var(--line)}
+.btn-wa{background:#25d366;color:#fff}
+.btn-danger{background:transparent;border:1.5px solid #efc9c1;color:var(--bad)}
+.btn-sm{padding:8px 12px;font-size:14px;width:auto;border-radius:10px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.seg{display:flex;background:#eeebe2;border-radius:13px;padding:4px;gap:4px}
+.seg button{flex:1;border:0;background:transparent;padding:10px 6px;border-radius:10px;font-weight:600;font-size:15px}
+.seg button.on{background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.1)}
+.field{display:block}
+.field>span{display:block;font-size:12px;font-weight:700;color:var(--muted);margin-bottom:5px;letter-spacing:.03em}
+.inp{width:100%;padding:13px 14px;border:1.5px solid var(--line);border-radius:12px;font-size:16px;background:#fff;outline:none}
+.inp:focus{border-color:var(--court2)}
+textarea.inp{min-height:70px;resize:vertical}
+.names{list-style:none;margin:10px 0 0;padding:0}
+.names li{display:flex;align-items:center;gap:10px;padding:9px 0;border-top:1px solid var(--line);min-height:44px}
+.names .n{width:24px;color:var(--muted);font-size:13px;font-variant-numeric:tabular-nums}
+.names .nm{flex:1;font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.names li.me .nm{font-weight:700}
+.you{font-size:11px;font-weight:800;background:var(--ball);color:var(--court);padding:2px 7px;border-radius:6px;margin-left:6px;vertical-align:1px}
+.empty{color:var(--muted);font-size:14px;padding:10px 0 2px}
+.bar{height:6px;background:#eeebe2;border-radius:6px;overflow:hidden;margin-top:10px}
+.bar i{display:block;height:100%;background:var(--court2);border-radius:6px}
+.wait{margin-top:12px;padding-top:4px}
+.wait h3{color:var(--warn)}
+.conf{border-radius:14px;padding:14px;display:flex;gap:12px;align-items:center}
+.conf.in{background:var(--okbg);color:var(--ok)}
+.conf.wl{background:var(--warnbg);color:var(--warn)}
+.conf .big{font-weight:800;font-size:17px;color:var(--ink)}
+.check{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:currentColor;flex:none}
+.check svg{width:20px;height:20px;stroke:#fff}
+.chips{display:flex;gap:8px;overflow-x:auto;padding:2px 0 12px;margin:0 -2px}
+.chip{flex:none;border:1.5px solid var(--line);background:#fff;border-radius:12px;padding:8px 12px;font-weight:600;font-size:14px}
+.chip.on{background:var(--court);color:#fff;border-color:var(--court)}
+.tabs{display:flex;gap:6px;margin:4px 0 14px}
+.tabs button{border:0;background:transparent;padding:8px 12px;border-radius:10px;font-weight:700;color:var(--muted)}
+.tabs button.on{background:#fff;color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.match{border:1.5px solid var(--line);border-radius:14px;padding:10px 12px;margin-top:8px}
+.match .ct{font-size:11px;font-weight:800;letter-spacing:.1em;color:var(--muted);text-transform:uppercase}
+.team{display:flex;align-items:center;gap:10px;padding:5px 0}
+.team .tn{flex:1;font-weight:600}
+.team .sc{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:20px;min-width:30px;text-align:right}
+.team.win .tn{color:var(--ok)}
+.sc-in{width:64px;padding:8px;border:1.5px solid var(--line);border-radius:10px;font-size:18px;text-align:center;font-weight:700}
+.vs{height:1px;background:var(--line);margin:2px 0}
+.sit{font-size:13px;color:var(--muted);margin-top:8px}
+table.lb{width:100%;border-collapse:collapse;margin-top:8px;font-size:14px}
+table.lb th{text-align:left;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);padding:6px 4px}
+table.lb td{padding:9px 4px;border-top:1px solid var(--line)}
+table.lb td.r,table.lb th.r{text-align:right;font-variant-numeric:tabular-nums}
+table.lb tr.me td{font-weight:700}
+.rk{display:inline-grid;place-items:center;width:24px;height:24px;border-radius:7px;background:#eeebe2;font-size:12px;font-weight:800}
+tr:nth-child(1) .rk{background:var(--ball);color:var(--court)}
+.banner{background:#fff7d6;border:1px solid #f0e2a6;color:#6d5a10;border-radius:14px;padding:10px 12px;font-size:13px;margin-bottom:14px}
+.foot{text-align:center;margin-top:26px}
+.foot a{color:var(--muted);font-size:13px;text-decoration:none;font-weight:600}
+.link{background:none;border:0;padding:0;color:var(--court2);font-weight:700;text-decoration:underline;text-underline-offset:3px}
+.toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%) translateY(20px);background:var(--ink);color:#fff;padding:12px 18px;border-radius:12px;font-weight:600;font-size:14px;opacity:0;transition:.25s;pointer-events:none;z-index:50;max-width:90vw;text-align:center}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.toast.err{background:var(--bad)}
+.icon-btn{border:0;background:#f3f1ea;border-radius:10px;width:36px;height:36px;display:grid;place-items:center;font-weight:800;color:var(--muted);flex:none}
+.icon-btn.armed{background:var(--bad);color:#fff;width:auto;padding:0 10px;font-size:13px}
+.mini-sel{padding:7px 8px;border:1.5px solid var(--line);border-radius:10px;background:#fff;font-size:14px;max-width:130px}
+.lvl-row{display:grid;grid-template-columns:1fr 70px 70px 36px;gap:8px;align-items:end;margin-top:8px}
+.ev-item{display:flex;gap:12px;align-items:center;width:100%;text-align:left;background:#fff;border:0;padding:0}
+.ev-item .meta{flex:1;min-width:0}
+.ev-item .t{font-weight:700}
+.loader{text-align:center;padding:40px 0;color:var(--muted)}
+.copybox{width:100%;min-height:160px;font-size:13px;margin-top:10px}
+hr.sep{border:0;border-top:1px solid var(--line);margin:16px 0}
+</style>
+</head>
+<body>
+<div id="app"><div class="loader">Loading…</div></div>
+<div id="toast" class="toast"></div>
+<script>
+(function(){
+'use strict';
+
+/* ============================================================
+   CONFIG — fill in the two Supabase values to go live.
+   Leave them empty to run in preview mode (data stays on this device).
+   ============================================================ */
+const CONFIG = {
+  CLUB: 'UZU Club',
+  GROUP: "Men's Americano",
+  SUPABASE_URL: 'https://etlbiheeumhrmzwcvene.supabase.co',        // e.g. https://abcdxyz.supabase.co
+  SUPABASE_ANON_KEY: 'sb_publishable_boyoxlapZQQQFtUz6EjjoA_zlczwKQC',   // Project Settings → API → anon public key
+  SHARE_URL: 'https://migquesada.github.io/mens-americano/'            // public link to this page (defaults to the current address)
+};
+const DEMO = !(CONFIG.SUPABASE_URL && CONFIG.SUPABASE_ANON_KEY);
+const DEMO_PIN = '1234';
+const $app = document.getElementById('app');
+const FORMATS = { americano: 'Americano', mexicano: 'Mexicano', open: 'Open play' };
+
+/* ---------- small utils ---------- */
+const LS = {
+  get(k, d) { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch (e) { return d; } },
+  set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
+};
+const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const uid = () => (window.crypto && crypto.randomUUID) ? crypto.randomUUID() : 'id' + Math.random().toString(36).slice(2) + Date.now().toString(36);
+const pad = n => String(n).padStart(2, '0');
+const dstr = d => d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate());
+const parseD = s => { const p = String(s).split('-').map(Number); return new Date(p[0], p[1] - 1, p[2]); };
+const todayStr = () => dstr(new Date());
+const addDays = (s, n) => { const d = parseD(s); d.setDate(d.getDate() + n); return dstr(d); };
+const clone = o => JSON.parse(JSON.stringify(o));
+function nextFriday(from) { const d = parseD(from || todayStr()); d.setDate(d.getDate() + ((5 - d.getDay() + 7) % 7)); return dstr(d); }
+const DOW = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+const MON = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+function fmtDate(s) { const d = parseD(s); return { dow: DOW[d.getDay()], day: d.getDate(), mon: MON[d.getMonth()], short: DOW[d.getDay()] + ', ' + MON[d.getMonth()] + ' ' + d.getDate() }; }
+function fmtT(t) { if (!t) return { t: '', ap: '' }; let p = t.split(':').map(Number), h = p[0], m = p[1] || 0; const ap = h >= 12 ? 'PM' : 'AM'; h = h % 12 || 12; return { t: h + (m ? ':' + pad(m) : ''), ap }; }
+function timeRange(a, b) { if (!a) return ''; const x = fmtT(a), y = fmtT(b); if (!b) return x.t + ' ' + x.ap; return x.ap === y.ap ? x.t + '–' + y.t + ' ' + y.ap : x.t + ' ' + x.ap + '–' + y.t + ' ' + y.ap; }
+function shuffle(a) { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+function fail(msg) { throw new Error(msg); }
+
+/* ============================================================
+   STORES — same interface for preview (local) and live (Supabase)
+   ============================================================ */
+let memDemo = null;
+function demoSeed() {
+  const ev = {
+    id: uid(), title: CONFIG.GROUP, date: nextFriday(), start: '15:00', end: '17:00', venue: CONFIG.CLUB,
+    format: 'americano', points: 21, status: 'open',
+    notes: 'Rotating partners and a little friendly competition. ₱500 regular | ₱400 members.',
+    levels: [{ id: 'int', name: 'Intermediate', courts: 1, max: 8 }, { id: 'beg', name: 'Beginners', courts: 1, max: 8 }],
+    rounds: {}
+  };
+  const names = ['Clement', 'Chef', 'Jinno', 'PREM', 'Max', 'Levent', 'Miguel', 'Howard', 'Gerard', 'Marcos', 'Pepillo', 'Kino'];
+  const t0 = Date.now() - 3600e3;
+  const signups = names.map((n, i) => ({ id: uid(), event_id: ev.id, name: n, level: i % 2 === 0 ? 'int' : 'beg', token: uid(), created_at: new Date(t0 + i * 60000).toISOString() }));
+  return { events: [ev], signups };
+}
+function demoLoad() { let d = LS.get('mpad-demo', null) || memDemo; if (!d) { d = demoSeed(); demoSave(d); } memDemo = d; return d; }
+function demoSave(d) { memDemo = d; LS.set('mpad-demo', d); }
+function demoPin(p) { if (p !== DEMO_PIN) fail('Wrong PIN'); }
+function dupName(list, eid, name, exceptId) { return list.some(s => s.event_id === eid && s.id !== exceptId && s.name.trim().toLowerCase() === name.trim().toLowerCase()); }
+
+const DemoStore = {
+  async list() { const d = demoLoad(); return { events: clone(d.events), signups: d.signups.map(s => ({ id: s.id, event_id: s.event_id, name: s.name, level: s.level, created_at: s.created_at })) }; },
+  async join(eid, name, level, token) {
+    const d = demoLoad(); const e = d.events.find(x => x.id === eid);
+    if (!e) fail('Event not found'); if (e.status !== 'open') fail('Sign-ups are closed');
+    name = name.trim(); if (!name) fail('Please enter your name');
+    if (dupName(d.signups, eid, name)) fail('That name is already on the list');
+    const id = uid(); d.signups.push({ id, event_id: eid, name, level, token, created_at: new Date().toISOString() }); demoSave(d); return id;
+  },
+  async leave(id, token) { const d = demoLoad(); const i = d.signups.findIndex(s => s.id === id && s.token === token); if (i < 0) fail("Couldn't find your sign-up"); d.signups.splice(i, 1); demoSave(d); },
+  async adminCheck(pin) { return pin === DEMO_PIN; },
+  async saveEvent(pin, ev) {
+    demoPin(pin); const d = demoLoad();
+    if (ev.id) { const i = d.events.findIndex(x => x.id === ev.id); if (i < 0) fail('Event not found'); d.events[i] = Object.assign({}, ev, { rounds: d.events[i].rounds || {} }); demoSave(d); return ev.id; }
+    const n = Object.assign({}, ev, { id: uid(), rounds: {} }); d.events.push(n); demoSave(d); return n.id;
+  },
+  async setStatus(pin, id, status) { demoPin(pin); const d = demoLoad(); const e = d.events.find(x => x.id === id); if (e) e.status = status; demoSave(d); },
+  async deleteEvent(pin, id) { demoPin(pin); const d = demoLoad(); d.events = d.events.filter(x => x.id !== id); d.signups = d.signups.filter(s => s.event_id !== id); demoSave(d); },
+  async addSignup(pin, eid, name, level) { demoPin(pin); const d = demoLoad(); name = name.trim(); if (!name) fail('Enter a name'); if (dupName(d.signups, eid, name)) fail('That name is already on the list'); d.signups.push({ id: uid(), event_id: eid, name, level, token: uid(), created_at: new Date().toISOString() }); demoSave(d); },
+  async updateSignup(pin, id, level) { demoPin(pin); const d = demoLoad(); const s = d.signups.find(x => x.id === id); if (s) s.level = level; demoSave(d); },
+  async removeSignup(pin, id) { demoPin(pin); const d = demoLoad(); d.signups = d.signups.filter(s => s.id !== id); demoSave(d); },
+  async saveRounds(pin, eid, rounds) { demoPin(pin); const d = demoLoad(); const e = d.events.find(x => x.id === eid); if (e) e.rounds = rounds; demoSave(d); }
+};
+
+async function sb(path, body) {
+  const base = CONFIG.SUPABASE_URL.replace(/\/+$/, ''), key = CONFIG.SUPABASE_ANON_KEY;
+  const r = await fetch(base + path, { method: body ? 'POST' : 'GET', headers: Object.assign({ apikey: key, 'Content-Type': 'application/json' }, /^eyJ/.test(key) ? { Authorization: 'Bearer ' + key } : {}), body: body ? JSON.stringify(body) : undefined });
+  const txt = await r.text(); let j = null; try { j = txt ? JSON.parse(txt) : null; } catch (e) {}
+  if (!r.ok) fail((j && (j.message || j.hint)) || ('Something went wrong (' + r.status + ')'));
+  return j;
+}
+const rpc = (fn, args) => sb('/rest/v1/rpc/' + fn, args || {});
+const fromRow = r => ({ id: r.id, title: r.title, date: r.date, start: r.start_time, end: r.end_time, venue: r.venue, format: r.format, points: r.points, notes: r.notes, status: r.status, levels: r.levels || [], rounds: r.rounds || {} });
+const toRow = e => ({ id: e.id || null, title: e.title, date: e.date, start_time: e.start, end_time: e.end, venue: e.venue, format: e.format, points: e.points, notes: e.notes, status: e.status, levels: e.levels });
+
+const SupaStore = {
+  async list() {
+    const since = addDays(todayStr(), -120);
+    const evs = await sb('/rest/v1/events?select=*&date=gte.' + since + '&order=date.asc');
+    const ids = (evs || []).map(e => e.id);
+    const sus = ids.length ? await sb('/rest/v1/signups?select=id,event_id,name,level,created_at&event_id=in.(' + ids.join(',') + ')&order=created_at.asc') : [];
+    return { events: (evs || []).map(fromRow), signups: sus || [] };
+  },
+  join: (eid, name, level, token) => rpc('join_event', { p_event: eid, p_name: name, p_level: level, p_token: token }),
+  leave: (id, token) => rpc('leave_event', { p_signup: id, p_token: token }),
+  adminCheck: pin => rpc('is_admin', { p_pin: pin }),
+  saveEvent: (pin, ev) => rpc('admin_save_event', { p_pin: pin, p_event: toRow(ev) }),
+  setStatus: (pin, id, status) => rpc('admin_set_status', { p_pin: pin, p_event: id, p_status: status }),
+  deleteEvent: (pin, id) => rpc('admin_delete_event', { p_pin: pin, p_event: id }),
+  addSignup: (pin, eid, name, level) => rpc('admin_add_signup', { p_pin: pin, p_event: eid, p_name: name, p_level: level }),
+  updateSignup: (pin, id, level) => rpc('admin_update_signup', { p_pin: pin, p_signup: id, p_level: level }),
+  removeSignup: (pin, id) => rpc('admin_remove_signup', { p_pin: pin, p_signup: id }),
+  saveRounds: (pin, eid, rounds) => rpc('admin_save_rounds', { p_pin: pin, p_event: eid, p_rounds: rounds })
+};
+const store = DEMO ? DemoStore : SupaStore;
+
+/* ============================================================
+   MATCH LOGIC — Americano (rotating partners) & Mexicano
+   round = { matches:[{court, a:[id,id], b:[id,id], sa, sb}], sitting:[id] }
+   ============================================================ */
+const pkey = (x, y) => x < y ? x + '|' + y : y + '|' + x;
+function stats(rounds, ids) {
+  const s = { partner: {}, opp: {}, sits: {}, act: {}, pts: {}, played: {}, wins: {} };
+  const all = new Set(ids || []);
+  (rounds || []).forEach(r => r.matches.forEach(m => [...m.a, ...m.b].forEach(p => all.add(p))));
+  all.forEach(id => { s.sits[id] = 0; s.act[id] = 0; s.pts[id] = 0; s.played[id] = 0; s.wins[id] = 0; });
+  (rounds || []).forEach(r => {
+    const active = new Set();
+    r.matches.forEach(m => {
+      [...m.a, ...m.b].forEach(p => { active.add(p); s.act[p]++; });
+      s.partner[pkey(m.a[0], m.a[1])] = (s.partner[pkey(m.a[0], m.a[1])] || 0) + 1;
+      s.partner[pkey(m.b[0], m.b[1])] = (s.partner[pkey(m.b[0], m.b[1])] || 0) + 1;
+      m.a.forEach(x => m.b.forEach(y => { s.opp[pkey(x, y)] = (s.opp[pkey(x, y)] || 0) + 1; }));
+      if (Number.isFinite(m.sa) && Number.isFinite(m.sb)) {
+        m.a.forEach(p => { s.pts[p] += m.sa; s.played[p]++; if (m.sa > m.sb) s.wins[p]++; });
+        m.b.forEach(p => { s.pts[p] += m.sb; s.played[p]++; if (m.sb > m.sa) s.wins[p]++; });
+      }
+    });
+    all.forEach(id => { if (!active.has(id) && (r.sitting || []).includes(id)) s.sits[id]++; });
+  });
+  return s;
+}
+function nextRound(players, courts, format, rounds) {
+  const n = players.length, m = Math.min(Math.max(1, courts | 0), Math.floor(n / 4));
+  if (m < 1) fail('Need at least 4 confirmed players for a round');
+  const st = stats(rounds, players);
+  const k = n - 4 * m;
+  const order = shuffle(players).sort((x, y) => (st.sits[x] - st.sits[y]) || (st.act[y] - st.act[x]));
+  const sitting = order.slice(0, k), active = order.slice(k);
+  const cost = (a, b) => (st.partner[pkey(a[0], a[1])] || 0) * 10 + (st.partner[pkey(b[0], b[1])] || 0) * 10 + a.reduce((t, x) => t + b.reduce((u, y) => u + (st.opp[pkey(x, y)] || 0) * 2, 0), 0);
+  let matches;
+  if (format === 'mexicano' && (rounds || []).length) {
+    const ranked = shuffle(active).sort((x, y) => st.pts[y] - st.pts[x]);
+    matches = [];
+    for (let i = 0; i < m; i++) { const q = ranked.slice(i * 4, i * 4 + 4); matches.push({ court: i + 1, a: [q[0], q[3]], b: [q[1], q[2]], sa: null, sb: null }); }
+  } else {
+    let best = null, bestCost = Infinity;
+    for (let t = 0; t < 400 && bestCost > 0; t++) {
+      const p = shuffle(active); let total = 0; const ms = [];
+      for (let i = 0; i < m; i++) {
+        const q = p.slice(i * 4, i * 4 + 4);
+        const opts = [[[q[0], q[1]], [q[2], q[3]]], [[q[0], q[2]], [q[1], q[3]]], [[q[0], q[3]], [q[1], q[2]]]];
+        let bo = opts[0], bc = Infinity; opts.forEach(o => { const c = cost(o[0], o[1]); if (c < bc) { bc = c; bo = o; } });
+        total += bc; ms.push({ court: i + 1, a: bo[0], b: bo[1], sa: null, sb: null });
+      }
+      if (total < bestCost) { bestCost = total; best = ms; }
+    }
+    matches = best;
+  }
+  return { matches, sitting };
+}
+function leaderboard(rounds) {
+  const st = stats(rounds, []);
+  return Object.keys(st.pts).map(id => ({ id, pts: st.pts[id], played: st.played[id], wins: st.wins[id] }))
+    .sort((a, b) => (b.pts - a.pts) || (b.wins - a.wins) || (a.played - b.played));
+}
+
+/* ============================================================
+   STATE
+   ============================================================ */
+const S = {
+  events: [], signups: [], loaded: false, loadErr: '', route: 'player', sel: null, ptab: 'list',
+  pin: LS.get('mpad-pin', ''), adminOk: false, aview: 'list', aevent: null, edit: null,
+  me: LS.get('mpad-me', { name: '', level: '' }), tokens: LS.get('mpad-tokens', {}),
+  armed: null, busy: false, copyText: null, dirty: false
+};
+const evById = id => S.events.find(e => e.id === id);
+const nameOf = id => { const s = S.signups.find(x => x.id === id); return s ? s.name : 'Removed player'; };
+function eventSignups(eid) { return S.signups.filter(s => s.event_id === eid).sort((a, b) => String(a.created_at).localeCompare(String(b.created_at))); }
+function levelLists(ev) {
+  const all = eventSignups(ev.id);
+  return (ev.levels || []).map(l => { const list = all.filter(s => s.level === l.id); const max = Math.max(0, l.max | 0); return { level: l, confirmed: list.slice(0, max), wait: list.slice(max), count: list.length, max }; });
+}
+function upcoming() { const t = todayStr(); return S.events.filter(e => e.date >= t && e.status !== 'done').sort((a, b) => a.date.localeCompare(b.date) || String(a.start).localeCompare(String(b.start))); }
+function mySignup(ev) { return eventSignups(ev.id).find(s => S.tokens[s.id]); }
+function shareUrl() { return CONFIG.SHARE_URL || location.href.split('#')[0]; }
+function shareText(ev) {
+  const f = fmtDate(ev.date);
+  let t = '🎾 ' + ev.title + ' — ' + f.short + (ev.start ? ' · ' + timeRange(ev.start, ev.end) : '') + '\n📍 ' + (ev.venue || CONFIG.CLUB) + '\n';
+  levelLists(ev).forEach(L => {
+    t += '\n*' + L.level.name.toUpperCase() + '* (' + L.confirmed.length + '/' + L.max + ')\n';
+    L.confirmed.forEach((s, i) => { t += (i + 1) + '. ' + s.name + '\n'; });
+    if (!L.confirmed.length) t += '— open —\n';
+    if (L.wait.length) t += 'Waitlist: ' + L.wait.map(s => s.name).join(', ') + '\n';
+  });
+  t += '\nSign up or drop out here 👉 ' + shareUrl();
+  return t;
+}
+
+/* ---------- toast ---------- */
+let toastT;
+function toast(msg, err) { const el = document.getElementById('toast'); el.textContent = msg; el.className = 'toast show' + (err ? ' err' : ''); clearTimeout(toastT); toastT = setTimeout(() => { el.className = 'toast' + (err ? ' err' : ''); }, 2600); }
+
+/* ============================================================
+   DATA LOADING
+   ============================================================ */
+let firstLoadTimer = setTimeout(() => { if (!S.loaded) { S.loadErr = "Can't reach the sign-up list right now. Check your connection — it will keep trying."; render(); } }, 10000);
+async function refresh(force) {
+  try {
+    const d = await store.list();
+    S.events = d.events; S.signups = d.signups; S.loaded = true; S.loadErr = ''; clearTimeout(firstLoadTimer);
+    // forget tokens for sign-ups that no longer exist
+    const ids = new Set(S.signups.map(s => s.id)); let changed = false;
+    Object.keys(S.tokens).forEach(k => { if (!ids.has(k)) { delete S.tokens[k]; changed = true; } });
+    if (changed) LS.set('mpad-tokens', S.tokens);
+  } catch (e) {
+    if (!S.loaded) S.loadErr = e.message;
+  }
+  safeRender(force);
+}
+function safeRender(force) {
+  const a = document.activeElement;
+  const typing = a && (a.tagName === 'INPUT' || a.tagName === 'TEXTAREA' || a.tagName === 'SELECT');
+  if (!force && (typing || (S.route === 'admin' && S.aview === 'edit'))) { S.dirty = true; return; }
+  S.dirty = false; render();
+}
+document.addEventListener('focusout', () => setTimeout(() => { if (S.dirty) safeRender(); }, 150));
+
+/* ============================================================
+   RENDER
+   ============================================================ */
+const CHECK = '<svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
+function statusPill(s) { const l = { open: 'Sign-ups open', closed: 'Sign-ups closed', done: 'Finished' }[s] || s; return '<span class="pill ' + esc(s) + '"><span class="dot"></span>' + esc(l) + '</span>'; }
+function header(kicker, title) { return '<div class="top"><div class="in"><div class="kicker">' + esc(kicker) + '</div><h1>' + esc(title) + '</h1></div></div>'; }
+function dateBox(ev) { const f = fmtDate(ev.date); return '<div class="datebox"><div class="w">' + f.dow + '</div><div class="d">' + f.day + '</div><div class="m">' + f.mon + '</div></div>'; }
+
+function render() {
+  S.route = location.hash === '#admin' ? 'admin' : 'player';
+  let h = S.route === 'admin' ? renderAdmin() : renderPlayer();
+  $app.innerHTML = h;
+  const nm = document.getElementById('nm'); if (nm && !nm.value) nm.value = S.me.name || '';
+}
+
+/* ---------- PLAYER ---------- */
+function renderPlayer() {
+  let h = header(CONFIG.CLUB, CONFIG.GROUP) + '<div class="wrap">';
+  if (DEMO) h += '<div class="banner"><b>Preview mode.</b> Sample data, saved only on this device. Organizer PIN: <b>' + DEMO_PIN + '</b></div>';
+  if (!S.loaded) return h + '<div class="card loader">' + esc(S.loadErr || 'Loading…') + '</div></div>';
+  const ups = upcoming();
+  if (!ups.length) return h + '<div class="card"><h2>No session scheduled yet</h2><p class="muted">The next Friday session will show up here once it’s posted.</p></div>' + footer() + '</div>';
+  if (!S.sel || !ups.some(e => e.id === S.sel)) S.sel = ups[0].id;
+  const ev = evById(S.sel);
+  if (ups.length > 1) h += '<div class="chips">' + ups.map(e => '<button class="chip' + (e.id === ev.id ? ' on' : '') + '" data-act="sel" data-id="' + e.id + '">' + esc(fmtDate(e.date).short) + '</button>').join('') + '</div>';
+  h += eventHero(ev);
+  const hasRounds = Object.values(ev.rounds || {}).some(r => r && r.length);
+  if (hasRounds) h += '<div class="tabs"><button class="' + (S.ptab === 'list' ? 'on' : '') + '" data-act="ptab" data-v="list">Players</button><button class="' + (S.ptab === 'matches' ? 'on' : '') + '" data-act="ptab" data-v="matches">Matches & standings</button></div>';
+  if (hasRounds && S.ptab === 'matches') h += matchesView(ev, false);
+  else {
+    h += joinPanel(ev);
+    h += levelLists(ev).map(L => levelCard(L, false)).join('');
+    h += sharePanel(ev);
+  }
+  return h + footer() + '</div>';
+}
+function eventHero(ev) {
+  return '<div class="card"><div class="date">' + dateBox(ev) + '<div style="flex:1;min-width:0"><h2>' + esc(ev.title) + '</h2><div class="muted">' + esc(timeRange(ev.start, ev.end)) + (ev.venue ? ' · ' + esc(ev.venue) : '') + '</div><div class="row" style="margin-top:6px;flex-wrap:wrap;gap:6px">' + statusPill(ev.status) + '<span class="pill">' + esc(FORMATS[ev.format] || ev.format) + '</span></div></div></div>' + (ev.notes ? '<p class="small muted" style="margin:12px 0 0;white-space:pre-line">' + esc(ev.notes) + '</p>' : '') + '</div>';
+}
+function joinPanel(ev) {
+  const mine = mySignup(ev);
+  if (mine) {
+    const L = levelLists(ev).find(x => x.level.id === mine.level);
+    const pos = L ? L.confirmed.findIndex(s => s.id === mine.id) : -1;
+    const wpos = L ? L.wait.findIndex(s => s.id === mine.id) : -1;
+    const isIn = pos >= 0;
+    const armed = S.armed === 'leave:' + mine.id;
+    return '<div class="card stack"><div class="conf ' + (isIn ? 'in' : 'wl') + '"><div class="check">' + (isIn ? CHECK : '<b style="color:#fff">' + (wpos + 1) + '</b>') + '</div><div><div class="big">' + (isIn ? 'You’re in, ' + esc(mine.name) + '!' : 'You’re on the waitlist') + '</div><div class="small">' + esc(L ? L.level.name : '') + (isIn ? ' · spot ' + (pos + 1) + ' of ' + L.max : ' · #' + (wpos + 1) + ' in line — you’ll move up automatically if someone drops out') + '</div></div></div>' +
+      '<button class="btn ' + (armed ? 'btn-danger' : 'btn-ghost') + '" data-act="leave" data-id="' + mine.id + '"' + (S.busy ? ' disabled' : '') + '>' + (armed ? 'Tap again to confirm — I can’t make it' : 'I’m out') + '</button></div>';
+  }
+  if (ev.status !== 'open') return '<div class="card"><b>Sign-ups are closed</b><div class="small muted">Message the organizer in the group if you’d like to be added.</div></div>';
+  const lv = (ev.levels || []).some(l => l.id === S.me.level) ? S.me.level : (ev.levels[0] || {}).id;
+  return '<div class="card stack"><label class="field"><span>YOUR NAME</span><input id="nm" class="inp" autocomplete="nickname" maxlength="40" placeholder="Name as the group knows you"></label>' +
+    ((ev.levels || []).length > 1 ? '<div><div class="field"><span>LEVEL</span></div><div class="seg">' + ev.levels.map(l => '<button data-act="lvl" data-v="' + esc(l.id) + '" class="' + (l.id === lv ? 'on' : '') + '">' + esc(l.name) + '</button>').join('') + '</div></div>' : '') +
+    '<button class="btn btn-ball" data-act="join" data-lv="' + esc(lv) + '"' + (S.busy ? ' disabled' : '') + '>I’m in 🎾</button></div>';
+}
+function levelCard(L, admin, ev) {
+  const pct = L.max ? Math.min(100, Math.round(L.confirmed.length / L.max * 100)) : 0;
+  const left = L.max - L.confirmed.length;
+  let h = '<div class="card"><div class="row between"><h2>' + esc(L.level.name) + '</h2><span class="small muted"><b style="color:var(--ink)">' + L.confirmed.length + '</b> / ' + L.max + (left > 0 ? ' · ' + left + ' spot' + (left > 1 ? 's' : '') + ' left' : ' · full') + '</span></div><div class="bar"><i style="width:' + pct + '%"></i></div>';
+  h += L.confirmed.length ? '<ol class="names">' + L.confirmed.map((s, i) => nameRow(s, i + 1, admin, ev)).join('') + '</ol>' : '<div class="empty">No one yet — be the first.</div>';
+  if (L.wait.length) h += '<div class="wait"><h3>Waitlist</h3><ol class="names">' + L.wait.map((s, i) => nameRow(s, i + 1, admin, ev)).join('') + '</ol></div>';
+  return h + '</div>';
+}
+function nameRow(s, n, admin, ev) {
+  const me = !!S.tokens[s.id];
+  let h = '<li class="' + (me ? 'me' : '') + '"><span class="n">' + n + '</span><span class="nm">' + esc(s.name) + (me ? '<span class="you">YOU</span>' : '') + '</span>';
+  if (admin) {
+    if ((ev.levels || []).length > 1) h += '<select class="mini-sel" data-chg="move" data-id="' + s.id + '">' + ev.levels.map(l => '<option value="' + esc(l.id) + '"' + (l.id === s.level ? ' selected' : '') + '>' + esc(l.name) + '</option>').join('') + '</select>';
+    const armed = S.armed === 'rm:' + s.id;
+    h += '<button class="icon-btn' + (armed ? ' armed' : '') + '" data-act="rm" data-id="' + s.id + '" aria-label="Remove">' + (armed ? 'Remove' : '✕') + '</button>';
+  }
+  return h + '</li>';
+}
+function sharePanel(ev) {
+  let h = '<div class="card stack"><a class="btn btn-wa" target="_blank" rel="noopener" href="https://wa.me/?text=' + encodeURIComponent(shareText(ev)) + '">Share list to WhatsApp</a><button class="btn btn-ghost" data-act="copy" data-id="' + ev.id + '">Copy list</button>';
+  if (S.copyText) h += '<textarea class="inp copybox" readonly>' + esc(S.copyText) + '</textarea><div class="small muted">Select all and copy.</div>';
+  return h + '</div>';
+}
+function footer() { return '<div class="foot">' + (S.route === 'admin' ? '<a href="#">← Player view</a>' : '<a href="#admin">Organizer</a>') + '</div>'; }
+
+/* ---------- MATCHES ---------- */
+function matchesView(ev, admin) {
+  let h = '';
+  (ev.levels || []).forEach(l => {
+    const rounds = (ev.rounds || {})[l.id] || [];
+    const L = levelLists(ev).find(x => x.level.id === l.id);
+    if (!admin && !rounds.length) return;
+    h += '<div class="card"><div class="row between"><h2>' + esc(l.name) + '</h2><span class="small muted">' + rounds.length + ' round' + (rounds.length === 1 ? '' : 's') + '</span></div>';
+    if (admin) {
+      const can = L.confirmed.length >= 4;
+      h += '<div class="row" style="margin-top:12px;gap:8px;flex-wrap:wrap"><button class="btn btn-dark btn-sm" data-act="genround" data-lv="' + esc(l.id) + '"' + (can ? '' : ' disabled') + '>+ Generate round ' + (rounds.length + 1) + '</button>' +
+        (rounds.length ? '<button class="btn btn-sm ' + (S.armed === 'undo:' + l.id ? 'btn-danger' : 'btn-ghost') + '" data-act="undoround" data-lv="' + esc(l.id) + '">' + (S.armed === 'undo:' + l.id ? 'Confirm undo' : 'Undo last round') + '</button>' : '') + '</div>';
+      if (!can) h += '<div class="small muted" style="margin-top:6px">Needs at least 4 confirmed players.</div>';
+    }
+    rounds.slice().reverse().forEach((r, ri0) => {
+      const ri = rounds.length - 1 - ri0;
+      h += '<hr class="sep"><h3>Round ' + (ri + 1) + '</h3>';
+      r.matches.forEach((m, mi) => {
+        const done = Number.isFinite(m.sa) && Number.isFinite(m.sb);
+        const team = (ids, sc, side, win) => '<div class="team' + (win ? ' win' : '') + '"><span class="tn">' + ids.map(i => esc(nameOf(i)) + (S.tokens[i] ? ' <span class="you">YOU</span>' : '')).join(' & ') + '</span>' +
+          (admin ? '<input class="sc-in" inputmode="numeric" pattern="[0-9]*" data-score="' + esc(l.id) + '|' + ri + '|' + mi + '|' + side + '" value="' + (Number.isFinite(sc) ? sc : '') + '">' : '<span class="sc">' + (Number.isFinite(sc) ? sc : '–') + '</span>') + '</div>';
+        h += '<div class="match"><div class="ct">Court ' + m.court + '</div>' + team(m.a, m.sa, 'a', done && m.sa > m.sb) + '<div class="vs"></div>' + team(m.b, m.sb, 'b', done && m.sb > m.sa) + '</div>';
+      });
+      if (r.sitting && r.sitting.length) h += '<div class="sit">Sitting out: ' + r.sitting.map(i => esc(nameOf(i))).join(', ') + '</div>';
+    });
+    const lb = leaderboard(rounds).filter(x => x.played > 0);
+    if (lb.length) {
+      h += '<hr class="sep"><h3>Standings</h3><table class="lb"><tr><th>#</th><th>Player</th><th class="r">W</th><th class="r">Pld</th><th class="r">Pts</th></tr>' +
+        lb.map((x, i) => '<tr class="' + (S.tokens[x.id] ? 'me' : '') + '"><td><span class="rk">' + (i + 1) + '</span></td><td>' + esc(nameOf(x.id)) + '</td><td class="r">' + x.wins + '</td><td class="r">' + x.played + '</td><td class="r"><b>' + x.pts + '</b></td></tr>').join('') + '</table>';
+    }
+    h += '</div>';
+  });
+  return h || '<div class="card muted">No matches yet.</div>';
+}
+
+/* ---------- ADMIN ---------- */
+function renderAdmin() {
+  let h = header(CONFIG.CLUB + ' · Organizer', 'Dashboard') + '<div class="wrap">';
+  if (DEMO) h += '<div class="banner"><b>Preview mode.</b> PIN is <b>' + DEMO_PIN + '</b>. Changes stay on this device until the live database is connected.</div>';
+  if (!S.adminOk) {
+    return h + '<div class="card stack"><h2>Organizer access</h2><label class="field"><span>PIN</span><input id="pin" class="inp" type="password" inputmode="numeric" autocomplete="off" placeholder="Enter organizer PIN"></label><button class="btn btn-dark" data-act="unlock"' + (S.busy ? ' disabled' : '') + '>Unlock</button></div>' + footer() + '</div>';
+  }
+  if (!S.loaded) return h + '<div class="card loader">' + esc(S.loadErr || 'Loading…') + '</div></div>';
+  if (S.aview === 'edit' && S.edit) return h + editorView() + '</div>';
+  if (S.aview === 'manage' && evById(S.aevent)) return h + manageView(evById(S.aevent)) + footer() + '</div>';
+  S.aview = 'list';
+  const t = todayStr();
+  const up = S.events.filter(e => e.date >= t).sort((a, b) => a.date.localeCompare(b.date));
+  const past = S.events.filter(e => e.date < t).sort((a, b) => b.date.localeCompare(a.date));
+  h += '<div class="card stack"><button class="btn btn-ball" data-act="new">+ New event</button>' + (S.events.length ? '<div class="small muted">Tip: “Repeat next week” copies an event’s setup with the date moved 7 days.</div>' : '') + '</div>';
+  const item = e => { const n = eventSignups(e.id).length; return '<div class="card"><button class="ev-item" data-act="manage" data-id="' + e.id + '">' + dateBox(e) + '<div class="meta"><div class="t">' + esc(e.title) + '</div><div class="small muted">' + esc(timeRange(e.start, e.end)) + ' · ' + n + ' signed up</div><div style="margin-top:6px">' + statusPill(e.status) + '</div></div><span class="muted" style="font-size:22px">›</span></button><div class="row" style="margin-top:12px;gap:8px"><button class="btn btn-ghost btn-sm" data-act="repeat" data-id="' + e.id + '">Repeat next week</button><button class="btn btn-ghost btn-sm" data-act="edit" data-id="' + e.id + '">Edit</button></div></div>'; };
+  h += '<h3 style="margin:18px 4px 10px">Upcoming</h3>' + (up.length ? up.map(item).join('') : '<div class="card muted">Nothing scheduled.</div>');
+  if (past.length) h += '<h3 style="margin:18px 4px 10px">Past</h3>' + past.slice(0, 8).map(item).join('');
+  return h + footer() + '</div>';
+}
+function manageView(ev) {
+  let h = '<div class="row" style="margin-bottom:10px"><button class="link" data-act="back">← All events</button></div>';
+  h += eventHero(ev);
+  h += '<div class="card stack"><div class="field"><span>SIGN-UPS</span></div><div class="seg">' + ['open', 'closed', 'done'].map(s => '<button data-act="status" data-v="' + s + '" class="' + (ev.status === s ? 'on' : '') + '">' + { open: 'Open', closed: 'Closed', done: 'Finished' }[s] + '</button>').join('') + '</div><div class="grid2"><button class="btn btn-ghost btn-sm" style="width:100%" data-act="edit" data-id="' + ev.id + '">Edit details</button><button class="btn btn-ghost btn-sm" style="width:100%" data-act="repeat" data-id="' + ev.id + '">Repeat next week</button></div></div>';
+  h += '<div class="tabs"><button class="' + (S.ptab !== 'matches' ? 'on' : '') + '" data-act="ptab" data-v="list">Players</button><button class="' + (S.ptab === 'matches' ? 'on' : '') + '" data-act="ptab" data-v="matches">Matches</button></div>';
+  if (S.ptab === 'matches') return h + matchesView(ev, true);
+  h += levelLists(ev).map(L => levelCard(L, true, ev)).join('');
+  const lv0 = (ev.levels[0] || {}).id;
+  h += '<div class="card stack"><div class="field"><span>ADD A PLAYER</span></div><input id="addnm" class="inp" maxlength="40" placeholder="Name">' +
+    ((ev.levels || []).length > 1 ? '<select id="addlv" class="inp">' + ev.levels.map(l => '<option value="' + esc(l.id) + '">' + esc(l.name) + '</option>').join('') + '</select>' : '<input type="hidden" id="addlv" value="' + esc(lv0) + '">') +
+    '<button class="btn btn-dark" data-act="addp">Add</button></div>';
+  h += sharePanel(ev);
+  return h;
+}
+function editorView() {
+  const e = S.edit;
+  const lv = (e.levels || []).map((l, i) => '<div class="lvl-row"><label class="field"><span>' + (i ? '' : 'LEVEL NAME') + '</span><input class="inp" data-lv="name" data-i="' + i + '" value="' + esc(l.name) + '"></label><label class="field"><span>' + (i ? '' : 'COURTS') + '</span><input class="inp" inputmode="numeric" data-lv="courts" data-i="' + i + '" value="' + esc(l.courts) + '"></label><label class="field"><span>' + (i ? '' : 'MAX') + '</span><input class="inp" inputmode="numeric" data-lv="max" data-i="' + i + '" value="' + esc(l.max) + '"></label><button class="icon-btn" data-act="dellvl" data-i="' + i + '" style="margin-bottom:6px" aria-label="Remove level">✕</button></div>').join('');
+  const armed = S.armed === 'delev';
+  return '<div class="row" style="margin-bottom:10px"><button class="link" data-act="cancel">← Cancel</button></div><div class="card stack"><h2>' + (e.id ? 'Edit event' : 'New event') + '</h2>' +
+    '<label class="field"><span>TITLE</span><input id="f-title" class="inp" value="' + esc(e.title) + '"></label>' +
+    '<label class="field"><span>DATE</span><input id="f-date" class="inp" type="date" value="' + esc(e.date) + '"></label>' +
+    '<div class="grid2"><label class="field"><span>START</span><input id="f-start" class="inp" type="time" value="' + esc(e.start) + '"></label><label class="field"><span>END</span><input id="f-end" class="inp" type="time" value="' + esc(e.end) + '"></label></div>' +
+    '<label class="field"><span>VENUE</span><input id="f-venue" class="inp" value="' + esc(e.venue) + '"></label>' +
+    '<div class="grid2"><label class="field"><span>FORMAT</span><select id="f-format" class="inp">' + Object.keys(FORMATS).map(k => '<option value="' + k + '"' + (e.format === k ? ' selected' : '') + '>' + FORMATS[k] + '</option>').join('') + '</select></label><label class="field"><span>POINTS / MATCH</span><input id="f-points" class="inp" inputmode="numeric" value="' + esc(e.points || '') + '" placeholder="e.g. 21"></label></div>' +
+    '<label class="field"><span>NOTES (fee, what to bring…)</span><textarea id="f-notes" class="inp">' + esc(e.notes || '') + '</textarea></label>' +
+    '<div><div class="field"><span>LEVELS & CAPACITY</span></div>' + lv + '<button class="link" style="margin-top:10px" data-act="addlvl">+ Add level</button></div>' +
+    '<label class="field"><span>SIGN-UPS</span><select id="f-status" class="inp"><option value="open"' + (e.status === 'open' ? ' selected' : '') + '>Open</option><option value="closed"' + (e.status === 'closed' ? ' selected' : '') + '>Closed</option><option value="done"' + (e.status === 'done' ? ' selected' : '') + '>Finished</option></select></label>' +
+    '<button class="btn btn-ball" data-act="save"' + (S.busy ? ' disabled' : '') + '>' + (e.id ? 'Save changes' : 'Create event') + '</button>' +
+    (e.id ? '<button class="btn btn-danger" data-act="delev">' + (armed ? 'Tap again to delete this event and its sign-ups' : 'Delete event') + '</button>' : '') + '</div>';
+}
+
+/* ============================================================
+   ACTIONS
+   ============================================================ */
+function collectForm() {
+  const e = S.edit; if (!e) return;
+  const v = id => { const el = document.getElementById(id); return el ? el.value : ''; };
+  Object.assign(e, { title: v('f-title').trim(), date: v('f-date'), start: v('f-start'), end: v('f-end'), venue: v('f-venue').trim(), format: v('f-format'), points: parseInt(v('f-points'), 10) || null, notes: v('f-notes'), status: v('f-status') });
+  document.querySelectorAll('[data-lv][data-i]').forEach(el => { const l = e.levels[+el.dataset.i]; if (!l) return; const k = el.dataset.lv; l[k] = k === 'name' ? el.value : (parseInt(el.value, 10) || 0); });
+}
+function templateFrom(src, date) {
+  const base = src || { title: CONFIG.GROUP, start: '15:00', end: '17:00', venue: CONFIG.CLUB, format: 'americano', points: 21, notes: '', levels: [{ id: 'beg', name: 'Beginners', courts: 1, max: 8 }, { id: 'int', name: 'Intermediate', courts: 1, max: 8 }] };
+  return { id: null, title: base.title, date, start: base.start, end: base.end, venue: base.venue, format: base.format, points: base.points, notes: base.notes, status: 'open', levels: clone(base.levels || []) };
+}
+async function act(fn, okMsg) {
+  if (S.busy) return; S.busy = true; render();
+  try { await fn(); if (okMsg) toast(okMsg); } catch (e) { toast(e.message || 'Something went wrong', true); }
+  S.busy = false; await refresh(true);
+}
+function curEvent() { return S.route === 'admin' ? evById(S.aevent) : evById(S.sel); }
+
+$app.addEventListener('click', async ev => {
+  const b = ev.target.closest('[data-act]'); if (!b) return;
+  const a = b.dataset.act, id = b.dataset.id;
+  const wasArmed = S.armed; if (!['leave', 'rm', 'delev', 'undoround'].includes(a)) S.armed = null;
+  switch (a) {
+    case 'sel': S.sel = id; S.copyText = null; render(); break;
+    case 'ptab': S.ptab = b.dataset.v; render(); break;
+    case 'lvl': { const nm = document.getElementById('nm'); if (nm) S.me.name = nm.value; S.me.level = b.dataset.v; LS.set('mpad-me', S.me); render(); break; }
+    case 'join': {
+      const e = curEvent(); const name = (document.getElementById('nm') || {}).value || '';
+      if (!name.trim()) { toast('Type your name first', true); document.getElementById('nm').focus(); return; }
+      const level = b.dataset.lv; S.me = { name: name.trim(), level }; LS.set('mpad-me', S.me);
+      act(async () => { const token = uid(); const sid = await store.join(e.id, name.trim(), level, token); S.tokens[sid] = token; LS.set('mpad-tokens', S.tokens); }, 'You’re in! See you on court 🎾');
+      break;
+    }
+    case 'leave': {
+      if (wasArmed !== 'leave:' + id) { S.armed = 'leave:' + id; render(); return; }
+      S.armed = null; const token = S.tokens[id];
+      act(async () => { await store.leave(id, token); delete S.tokens[id]; LS.set('mpad-tokens', S.tokens); }, 'You’re out. Your spot went to the next person.');
+      break;
+    }
+    case 'copy': {
+      const e = evById(id); const txt = shareText(e);
+      try { await navigator.clipboard.writeText(txt); S.copyText = null; toast('List copied — paste it in the group'); } catch (err) { S.copyText = txt; render(); }
+      break;
+    }
+    case 'unlock': {
+      const pin = (document.getElementById('pin') || {}).value || '';
+      S.busy = true; render();
+      try { const ok = await store.adminCheck(pin); if (ok) { S.pin = pin; S.adminOk = true; LS.set('mpad-pin', pin); } else toast('Wrong PIN', true); } catch (e2) { toast(e2.message, true); }
+      S.busy = false; render(); break;
+    }
+    case 'new': { const last = S.events.slice().sort((x, y) => y.date.localeCompare(x.date))[0]; S.edit = templateFrom(last, (last && last.date >= todayStr()) ? nextFriday(addDays(last.date, 1)) : nextFriday()); S.aview = 'edit'; render(); window.scrollTo(0, 0); break; }
+    case 'repeat': { const src = evById(id); S.edit = templateFrom(src, addDays(src.date, 7)); S.aview = 'edit'; render(); window.scrollTo(0, 0); break; }
+    case 'edit': { S.edit = clone(evById(id)); S.aview = 'edit'; render(); window.scrollTo(0, 0); break; }
+    case 'cancel': S.edit = null; S.aview = S.aevent ? 'manage' : 'list'; render(); break;
+    case 'back': S.aview = 'list'; S.aevent = null; S.ptab = 'list'; S.copyText = null; render(); break;
+    case 'manage': S.aevent = id; S.aview = 'manage'; S.ptab = 'list'; S.copyText = null; render(); window.scrollTo(0, 0); break;
+    case 'addlvl': collectForm(); S.edit.levels.push({ id: 'l' + Date.now().toString(36), name: '', courts: 1, max: 8 }); render(); break;
+    case 'dellvl': collectForm(); S.edit.levels.splice(+b.dataset.i, 1); render(); break;
+    case 'save': {
+      collectForm(); const e = S.edit;
+      if (!e.title) return toast('Add a title', true);
+      if (!e.date) return toast('Pick a date', true);
+      e.levels = e.levels.filter(l => l.name.trim());
+      if (!e.levels.length) return toast('Add at least one level', true);
+      e.levels.forEach(l => { l.name = l.name.trim(); l.courts = Math.max(1, l.courts | 0); l.max = Math.max(1, l.max | 0); if (!l.id) l.id = 'l' + Math.random().toString(36).slice(2, 7); });
+      S.busy = true; render();
+      try { const nid = await store.saveEvent(S.pin, e); S.aevent = nid || e.id; S.aview = 'manage'; S.edit = null; toast(e.id ? 'Saved' : 'Event created'); } catch (err) { toast(err.message, true); }
+      S.busy = false; await refresh(true); break;
+    }
+    case 'delev': {
+      if (wasArmed !== 'delev') { collectForm(); S.armed = 'delev'; render(); return; }
+      S.armed = null; const eid = S.edit.id; S.edit = null; S.aview = 'list'; S.aevent = null;
+      act(() => store.deleteEvent(S.pin, eid), 'Event deleted'); break;
+    }
+    case 'status': { const e = curEvent(); act(() => store.setStatus(S.pin, e.id, b.dataset.v), { open: 'Sign-ups opened', closed: 'Sign-ups closed', done: 'Marked as finished' }[b.dataset.v]); break; }
+    case 'rm': {
+      if (wasArmed !== 'rm:' + id) { S.armed = 'rm:' + id; render(); return; }
+      S.armed = null; act(() => store.removeSignup(S.pin, id), 'Removed'); break;
+    }
+    case 'addp': {
+      const e = curEvent(); const name = (document.getElementById('addnm') || {}).value || ''; const lv = (document.getElementById('addlv') || {}).value;
+      if (!name.trim()) return toast('Type a name', true);
+      act(() => store.addSignup(S.pin, e.id, name.trim(), lv), name.trim() + ' added'); break;
+    }
+    case 'genround': {
+      const e = curEvent(); const lvId = b.dataset.lv; const l = e.levels.find(x => x.id === lvId);
+      const L = levelLists(e).find(x => x.level.id === lvId);
+      try {
+        const rounds = clone(e.rounds || {}); rounds[lvId] = rounds[lvId] || [];
+        rounds[lvId].push(nextRound(L.confirmed.map(s => s.id), l.courts, e.format, rounds[lvId]));
+        e.rounds = rounds; render();
+        act(() => store.saveRounds(S.pin, e.id, rounds), 'Round ' + rounds[lvId].length + ' ready');
+      } catch (err) { toast(err.message, true); }
+      break;
+    }
+    case 'undoround': {
+      const lvId = b.dataset.lv;
+      if (wasArmed !== 'undo:' + lvId) { S.armed = 'undo:' + lvId; render(); return; }
+      S.armed = null; const e = curEvent(); const rounds = clone(e.rounds || {}); (rounds[lvId] || []).pop(); e.rounds = rounds;
+      act(() => store.saveRounds(S.pin, e.id, rounds), 'Last round removed'); break;
+    }
+  }
+});
+
+let scoreTimer = null;
+$app.addEventListener('change', ev => {
+  const el = ev.target;
+  if (el.dataset.chg === 'move') { const id = el.dataset.id, v = el.value; act(() => store.updateSignup(S.pin, id, v), 'Moved'); return; }
+  if (el.dataset.score) {
+    const [lvId, ri, mi, side] = el.dataset.score.split('|'); const e = curEvent();
+    const rounds = clone(e.rounds || {}); const m = rounds[lvId][+ri].matches[+mi];
+    const v = el.value.trim() === '' ? null : parseInt(el.value, 10);
+    m['s' + side] = Number.isFinite(v) ? v : null;
+    const other = side === 'a' ? 'b' : 'a';
+    if (Number.isFinite(v) && e.points && e.format !== 'open' && !Number.isFinite(m['s' + other]) && v <= e.points) {
+      m['s' + other] = e.points - v;
+      const oi = $app.querySelector('[data-score="' + lvId + '|' + ri + '|' + mi + '|' + other + '"]'); if (oi) oi.value = m['s' + other];
+    }
+    e.rounds = rounds;
+    clearTimeout(scoreTimer);
+    scoreTimer = setTimeout(async () => { try { await store.saveRounds(S.pin, e.id, e.rounds); toast('Score saved'); } catch (err) { toast(err.message, true); } refresh(); }, 400);
+  }
+});
+$app.addEventListener('keydown', ev => {
+  if (ev.key !== 'Enter') return;
+  const id = ev.target.id;
+  const map = { nm: '[data-act="join"]', pin: '[data-act="unlock"]', addnm: '[data-act="addp"]' };
+  if (map[id]) { ev.preventDefault(); const b = $app.querySelector(map[id]); if (b) b.click(); }
+});
+
+/* ============================================================
+   BOOT
+   ============================================================ */
+window.addEventListener('hashchange', () => { S.ptab = 'list'; S.copyText = null; render(); window.scrollTo(0, 0); });
+if (DEMO) window.addEventListener('storage', e => { if (e.key === 'mpad-demo') { memDemo = null; refresh(); } });
+else { setInterval(() => { if (!document.hidden) refresh(); }, 15000); document.addEventListener('visibilitychange', () => { if (!document.hidden) refresh(); }); }
+(async () => {
+  if (S.pin) { try { S.adminOk = !!(await store.adminCheck(S.pin)); } catch (e) {} }
+  render(); refresh(true);
+})();
+
+// expose pure logic for testing
+window.__padel = { nextRound, leaderboard, stats };
+})();
+</script>
+</body>
+</html>
